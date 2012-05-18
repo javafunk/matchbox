@@ -13,7 +13,7 @@ import org.javafunk.matchbox.implementations.MatchesMatcher;
 import org.javafunk.matchbox.implementations.MismatchMessageMatcher;
 
 public class MatcherMatchers {
-    public static <T> Matcher<Matcher<T>> mismatchesSampleWithMessage(final T sample, final String descriptionContains) {
+    public static <T> Matcher<Matcher<? super T>> mismatchesSampleWithMessage(final T sample, final String descriptionContains) {
         return new MismatchMessageMatcher<T>(sample, descriptionContains);
     }
 

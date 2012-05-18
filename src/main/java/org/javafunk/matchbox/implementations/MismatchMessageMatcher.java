@@ -8,12 +8,17 @@
  */
 package org.javafunk.matchbox.implementations;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
-public class MismatchMessageMatcher<T> extends TypeSafeDiagnosingMatcher<Matcher<T>> {
+import static org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE;
+
+public class MismatchMessageMatcher<T> extends TypeSafeDiagnosingMatcher<Matcher<? super T>> {
     private final T sample;
     private final String descriptionContains;
 
@@ -23,7 +28,7 @@ public class MismatchMessageMatcher<T> extends TypeSafeDiagnosingMatcher<Matcher
     }
 
     @Override
-    protected boolean matchesSafely(Matcher<T> matcher, Description description) {
+    protected boolean matchesSafely(Matcher<? super T> matcher, Description description) {
         if (matcher.matches(sample)) {
             description.appendText("matcher matched");
             return false;
@@ -40,5 +45,20 @@ public class MismatchMessageMatcher<T> extends TypeSafeDiagnosingMatcher<Matcher
     public void describeTo(Description description) {
         description.appendText("Matcher to mismatch ").appendValue(sample)
                 .appendText(" and give description containing ").appendValue(descriptionContains);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return EqualsBuilder.reflectionEquals(this, object);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, SHORT_PREFIX_STYLE);
     }
 }
