@@ -6,9 +6,8 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.javafunk.matchbox.MatcherMatchers.matches;
-import static org.javafunk.matchbox.MatcherMatchers.mismatchesSampleWithMessage;
+import static org.javafunk.matchbox.Matchers.matches;
+import static org.javafunk.matchbox.Matchers.mismatchesSampleWithMessage;
 
 public class BetweenMatcherTest {
     @Test

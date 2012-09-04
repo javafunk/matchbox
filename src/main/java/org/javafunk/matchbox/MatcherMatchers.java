@@ -12,7 +12,7 @@ import org.hamcrest.Matcher;
 import org.javafunk.matchbox.implementations.MatchesMatcher;
 import org.javafunk.matchbox.implementations.MismatchMessageMatcher;
 
-public class MatcherMatchers {
+class MatcherMatchers {
     private MatcherMatchers() {}
 
     public static <T> Matcher<Matcher<? super T>> mismatchesSampleWithMessage(T sample, String descriptionContains) {

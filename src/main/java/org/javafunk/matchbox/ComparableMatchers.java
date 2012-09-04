@@ -11,7 +11,7 @@ package org.javafunk.matchbox;
 import org.hamcrest.Matcher;
 import org.javafunk.matchbox.implementations.BetweenMatcher;
 
-public class ComparableMatchers {
+class ComparableMatchers {
     private ComparableMatchers() {}
 
     public static <T extends Comparable<T>> Matcher<T> between(T low, T high) {

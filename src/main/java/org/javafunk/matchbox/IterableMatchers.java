@@ -14,7 +14,7 @@ import org.javafunk.matchbox.implementations.*;
 import static java.util.Arrays.asList;
 import static org.javafunk.funk.Literals.listFrom;
 
-public class IterableMatchers {
+class IterableMatchers {
     private IterableMatchers() {}
 
     public static <T> Matcher<Iterable<T>> hasOnlyItemsInAnyOrder(T... items) {

@@ -17,7 +17,7 @@ import java.util.Set;
 
 import static java.util.Arrays.asList;
 
-public class ObjectMatchers {
+class ObjectMatchers {
     public static <T> Matcher<T> isBeanWithSameAttributesAs(T expectedObject) {
         return isBeanWithSameAttributesAs(expectedObject, Collections.<String>emptySet());
     }

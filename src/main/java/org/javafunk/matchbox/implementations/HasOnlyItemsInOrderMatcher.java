@@ -10,17 +10,16 @@ package org.javafunk.matchbox.implementations;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.javafunk.funk.datastructures.tuples.Pair;
-import org.javafunk.matchbox.IterableMatchers;
+import org.javafunk.matchbox.Matchers;
 
 import java.util.Iterator;
 
-import static org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE;
 import static org.javafunk.funk.Lazily.enumerate;
+import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
 
 public class HasOnlyItemsInOrderMatcher<E> extends TypeSafeDiagnosingMatcher<Iterable<E>> {
     private final Iterable<E> expectedItems;
@@ -31,7 +30,7 @@ public class HasOnlyItemsInOrderMatcher<E> extends TypeSafeDiagnosingMatcher<Ite
 
     @Override
     protected boolean matchesSafely(Iterable<E> actualItems, Description description) {
-        Matcher<Iterable<E>> orderAgnosticMatcher = IterableMatchers.hasOnlyItemsInAnyOrder(expectedItems);
+        Matcher<Iterable<E>> orderAgnosticMatcher = hasOnlyItemsInAnyOrder(expectedItems);
         if (!orderAgnosticMatcher.matches(actualItems)) {
             orderAgnosticMatcher.describeMismatch(actualItems, description);
             return false;
