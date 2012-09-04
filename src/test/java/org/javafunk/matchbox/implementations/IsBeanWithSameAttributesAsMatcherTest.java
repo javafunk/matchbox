@@ -4,7 +4,6 @@ import org.hamcrest.Matcher;
 import org.javafunk.matchbox.testclasses.Bean;
 import org.junit.Test;
 
-import static java.lang.String.format;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.javafunk.matchbox.MatcherMatchers.matches;
 import static org.javafunk.matchbox.MatcherMatchers.mismatchesSampleWithMessage;
@@ -35,7 +34,8 @@ public class IsBeanWithSameAttributesAsMatcherTest {
         Matcher<Bean> matcher = isBeanWithSameAttributesAs(expected);
 
         // Then
-        assertThat(matcher, mismatchesSampleWithMessage(actual, "got      Bean <Bean<attribute1=<A>, attribute2=<B>, attribute3=<C>, attribute4=<E>, >>\n" +
+        assertThat(matcher, mismatchesSampleWithMessage(actual,
+                "got a Bean <Bean<attribute1=<A>, attribute2=<B>, attribute3=<C>, attribute4=<E>, >>\n" +
                 "Mismatch: expected property \"attribute4\" = \"E\"\n" +
                 "            actual property \"attribute4\" = \"D\""));
     }

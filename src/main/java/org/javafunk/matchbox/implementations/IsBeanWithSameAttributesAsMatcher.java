@@ -44,7 +44,7 @@ public class IsBeanWithSameAttributesAsMatcher<T> extends TypeSafeDiagnosingMatc
             Object actualValue = actualProperties.get(propertyName);
             Object expectedValue = expectedProperties.get(propertyName);
             if ((actualValue == null && expectedValue != null) || (actualValue != null && !actualValue.equals(expectedValue))) {
-                description.appendText(format("got      %s ", actualObject.getClass().getSimpleName()))
+                description.appendText(format("got a %s ", actualObject.getClass().getSimpleName()))
                         .appendValue(expectedObject)
                         .appendText(format("\nMismatch: expected property \"%s\" = ", propertyName))
                         .appendValue(expectedValue)
