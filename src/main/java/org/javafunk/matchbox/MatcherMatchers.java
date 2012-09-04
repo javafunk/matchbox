@@ -13,11 +13,13 @@ import org.javafunk.matchbox.implementations.MatchesMatcher;
 import org.javafunk.matchbox.implementations.MismatchMessageMatcher;
 
 public class MatcherMatchers {
-    public static <T> Matcher<Matcher<? super T>> mismatchesSampleWithMessage(final T sample, final String descriptionContains) {
+    private MatcherMatchers() {}
+
+    public static <T> Matcher<Matcher<? super T>> mismatchesSampleWithMessage(T sample, String descriptionContains) {
         return new MismatchMessageMatcher<T>(sample, descriptionContains);
     }
 
-    public static <T> Matcher<Matcher<? super T>> matches(final T sample) {
+    public static <T> Matcher<Matcher<? super T>> matches(T sample) {
         return new MatchesMatcher<T>(sample);
     }
 }

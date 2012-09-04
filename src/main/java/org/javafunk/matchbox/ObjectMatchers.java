@@ -18,11 +18,11 @@ import java.util.Set;
 import static java.util.Arrays.asList;
 
 public class ObjectMatchers {
-    public static <T> Matcher<T> isBeanWithSameAttributesAs(final T expectedObject) {
+    public static <T> Matcher<T> isBeanWithSameAttributesAs(T expectedObject) {
         return isBeanWithSameAttributesAs(expectedObject, Collections.<String>emptySet());
     }
 
-    public static <T> Matcher<T> isBeanWithSameAttributesAs(final T expectedObject, final Set<String> ignoreProperties) {
+    public static <T> Matcher<T> isBeanWithSameAttributesAs(T expectedObject, Set<String> ignoreProperties) {
         return new IsBeanWithSameAttributesAsMatcher<T>(expectedObject, ignoreProperties);
     }
 
