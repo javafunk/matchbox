@@ -20,11 +20,11 @@ import static org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE;
 
 public class MismatchMessageMatcher<T> extends TypeSafeDiagnosingMatcher<Matcher<? super T>> {
     private final T sample;
-    private final String descriptionContains;
+    private final String mismatchMessage;
 
-    public MismatchMessageMatcher(T sample, String descriptionContains) {
+    public MismatchMessageMatcher(T sample, String mismatchMessage) {
         this.sample = sample;
-        this.descriptionContains = descriptionContains;
+        this.mismatchMessage = mismatchMessage;
     }
 
     @Override
@@ -38,13 +38,13 @@ public class MismatchMessageMatcher<T> extends TypeSafeDiagnosingMatcher<Matcher
         matcher.describeMismatch(sample, actualDescription);
         description.appendText("got description ").appendValue(actualDescription);
 
-        return actualDescription.toString().equals(descriptionContains);
+        return actualDescription.toString().equals(mismatchMessage);
     }
 
     @Override
     public void describeTo(Description description) {
-        description.appendText("Matcher to mismatch ").appendValue(sample)
-                .appendText(" and give description containing ").appendValue(descriptionContains);
+        description.appendText("matcher to mismatch ").appendValue(sample)
+                .appendText(" and give description containing ").appendValue(mismatchMessage);
     }
 
     @Override

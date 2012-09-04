@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 
 public class MismatchMessageMatcherTest {
@@ -89,5 +90,24 @@ public class MismatchMessageMatcherTest {
 
         // Then
         assertThat(targetDescription.toString(), is(expectedDescription.toString()));
+    }
+
+    @Test
+    public void shouldDescribeExpectedToSuppliedDescription() throws Exception {
+        // Given
+        Description actual = new StringDescription();
+        MismatchMessageMatcher<Integer> mismatchMessageMatcher = new MismatchMessageMatcher<Integer>(5, "wrong mismatch message");
+
+        Description expected = new StringDescription();
+        expected.appendText("matcher to mismatch ")
+                .appendValue(5)
+                .appendText(" and give description containing ")
+                .appendValue("wrong mismatch message");
+
+        // When
+        mismatchMessageMatcher.describeTo(actual);
+
+        // Then
+        assertThat(actual.toString(), is(expected.toString()));
     }
 }
