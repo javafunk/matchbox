@@ -27,6 +27,10 @@ public class MismatchMessageMatcher<T> extends TypeSafeDiagnosingMatcher<Matcher
         this.mismatchMessage = mismatchMessage;
     }
 
+    public static <T> Matcher<Matcher<? super T>> mismatchesSampleWithMessage(T sample, String descriptionContains) {
+        return new MismatchMessageMatcher<T>(sample, descriptionContains);
+    }
+
     @Override
     protected boolean matchesSafely(Matcher<? super T> matcher, Description description) {
         if (matcher.matches(sample)) {

@@ -6,23 +6,23 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.matchbox.Matchers.matches;
+import static org.javafunk.matchbox.Matchers.successfullyMatches;
 import static org.javafunk.matchbox.Matchers.mismatchesSampleWithMessage;
 
 public class BetweenMatcherTest {
     @Test
     public void shouldMatchIfComparableValueBetweenSuppliedValues() throws Exception {
-        assertThat(betweenMatcher(5, 10), matches(7));
+        assertThat(betweenMatcher(5, 10), successfullyMatches(7));
     }
 
     @Test
     public void shouldMatchIfComparableValueEqualToLowerBound() throws Exception {
-        assertThat(betweenMatcher(5, 10), matches(5));
+        assertThat(betweenMatcher(5, 10), successfullyMatches(5));
     }
 
     @Test
     public void shouldMatchIfComparableValueEqualToUpperBound() throws Exception {
-        assertThat(betweenMatcher(5, 10), matches(10));
+        assertThat(betweenMatcher(5, 10), successfullyMatches(10));
     }
 
     @Test

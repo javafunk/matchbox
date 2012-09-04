@@ -11,16 +11,18 @@ package org.javafunk.matchbox.implementations;
 import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import static java.lang.String.format;
+import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.join;
-import static org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE;
 
 public class IsBeanWithSameAttributesAsMatcher<T> extends TypeSafeDiagnosingMatcher<T> {
     private final T expectedObject;
@@ -29,6 +31,18 @@ public class IsBeanWithSameAttributesAsMatcher<T> extends TypeSafeDiagnosingMatc
     public IsBeanWithSameAttributesAsMatcher(T expectedObject, Set<String> ignoreProperties) {
         this.expectedObject = expectedObject;
         this.ignoreProperties = ignoreProperties;
+    }
+
+    public static <T> Matcher<T> isBeanWithSameAttributesAs(T expectedObject) {
+        return isBeanWithSameAttributesAs(expectedObject, Collections.<String>emptySet());
+    }
+
+    public static <T> Matcher<T> isBeanWithSameAttributesAs(T expectedObject, Set<String> ignoreProperties) {
+        return new IsBeanWithSameAttributesAsMatcher<T>(expectedObject, ignoreProperties);
+    }
+
+    public static Set<String> ignoring(String... ignoreProperties) {
+        return new HashSet<String>(asList(ignoreProperties));
     }
 
     @Override

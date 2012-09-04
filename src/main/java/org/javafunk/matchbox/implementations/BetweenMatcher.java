@@ -12,6 +12,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 import static org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE;
@@ -25,6 +26,10 @@ public class BetweenMatcher<T extends Comparable<T>> extends TypeSafeMatcher<T> 
     public BetweenMatcher(T low, T high) {
         this.low = low;
         this.high = high;
+    }
+
+    public static <T extends Comparable<T>> Matcher<T> between(T low, T high) {
+        return new BetweenMatcher<T>(low, high);
     }
 
     @Override

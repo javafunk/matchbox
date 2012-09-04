@@ -11,12 +11,12 @@ package org.javafunk.matchbox.implementations;
 import com.google.common.collect.Multiset;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.javafunk.funk.Multisets;
 
-import static org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE;
+import static org.javafunk.funk.Literals.listFrom;
 import static org.javafunk.funk.Literals.multisetFrom;
 
 public class HasOnlyItemsInAnyOrderMatcher<E> extends TypeSafeDiagnosingMatcher<Iterable<E>> {
@@ -24,6 +24,14 @@ public class HasOnlyItemsInAnyOrderMatcher<E> extends TypeSafeDiagnosingMatcher<
 
     public HasOnlyItemsInAnyOrderMatcher(Iterable<E> expectedMultiset) {
         this.expectedMultiset = multisetFrom(expectedMultiset);
+    }
+
+    public static <T> Matcher<Iterable<T>> hasOnlyItemsInAnyOrder(T... items) {
+        return hasOnlyItemsInAnyOrder(listFrom(items));
+    }
+
+    public static <T> Matcher<Iterable<T>> hasOnlyItemsInAnyOrder(Iterable<T> expectedItems) {
+        return new HasOnlyItemsInAnyOrderMatcher<T>(expectedItems);
     }
 
     @Override

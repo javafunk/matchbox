@@ -26,6 +26,10 @@ public class MatchesMatcher<T> extends TypeSafeDiagnosingMatcher<Matcher<? super
         this.sample = sample;
     }
 
+    public static <T> Matcher<Matcher<? super T>> successfullyMatches(T sample) {
+        return new MatchesMatcher<T>(sample);
+    }
+
     @Override
     protected boolean matchesSafely(Matcher<? super T> matcher, Description description) {
         if (!matcher.matches(sample)) {

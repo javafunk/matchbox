@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.javafunk.matchbox.Matchers.isBeanWithSameAttributesAs;
-import static org.javafunk.matchbox.Matchers.matches;
+import static org.javafunk.matchbox.Matchers.successfullyMatches;
 import static org.javafunk.matchbox.Matchers.mismatchesSampleWithMessage;
 import static org.javafunk.matchbox.testclasses.Bean.bean;
 
@@ -21,7 +21,7 @@ public class IsBeanWithSameAttributesAsMatcherTest {
         Matcher<Bean> matcher = isBeanWithSameAttributesAs(expected);
 
         // Then
-        assertThat(matcher, matches(actual));
+        assertThat(matcher, successfullyMatches(actual));
     }
 
     @Test

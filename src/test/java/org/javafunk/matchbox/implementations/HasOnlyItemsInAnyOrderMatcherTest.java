@@ -8,7 +8,7 @@ import static org.hamcrest.Matchers.is;
 import static org.javafunk.funk.Literals.iterable;
 import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
-import static org.javafunk.matchbox.Matchers.matches;
+import static org.javafunk.matchbox.Matchers.successfullyMatches;
 import static org.javafunk.matchbox.Matchers.mismatchesSampleWithMessage;
 
 public class HasOnlyItemsInAnyOrderMatcherTest {
@@ -67,7 +67,7 @@ public class HasOnlyItemsInAnyOrderMatcherTest {
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
 
         // Then
-        assertThat(matcher, matches(actual));
+        assertThat(matcher, successfullyMatches(actual));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class HasOnlyItemsInAnyOrderMatcherTest {
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
 
         // Then
-        assertThat(matcher, matches(actual));
+        assertThat(matcher, successfullyMatches(actual));
     }
 
     @Test
@@ -147,7 +147,7 @@ public class HasOnlyItemsInAnyOrderMatcherTest {
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
 
         // Then
-        assertThat(matcher, matches(actual));
+        assertThat(matcher, successfullyMatches(actual));
     }
 
     @Test

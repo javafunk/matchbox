@@ -9,6 +9,7 @@
 package org.javafunk.matchbox.implementations;
 
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.javafunk.matchbox.SelfDescribingPredicate;
 
@@ -19,6 +20,10 @@ public class HasAllElementsSatisfyingMatcher<T> extends TypeSafeMatcher<Iterable
 
     public HasAllElementsSatisfyingMatcher(SelfDescribingPredicate<T> predicate) {
         this.predicate = predicate;
+    }
+
+    public static <T> Matcher<Iterable<T>> hasAllElementsSatisfying(SelfDescribingPredicate<T> predicate) {
+        return new HasAllElementsSatisfyingMatcher<T>(predicate);
     }
 
     @Override
