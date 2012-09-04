@@ -20,7 +20,7 @@ public class IterableMatchers {
         return hasOnlyItemsInAnyOrder(asList(items));
     }
 
-    public static <T> Matcher<Iterable<T>> hasOnlyItemsInAnyOrder(final Iterable<T> expectedItems) {
+    public static <T> Matcher<Iterable<T>> hasOnlyItemsInAnyOrder(Iterable<T> expectedItems) {
         return new HasOnlyItemsInAnyOrderMatcher<T>(expectedItems);
     }
 
@@ -28,15 +28,15 @@ public class IterableMatchers {
         return hasOnlyItemsInOrder(asList(items));
     }
 
-    public static <T> Matcher<Iterable<T>> hasOnlyItemsInOrder(final Iterable<T> expectedItems) {
+    public static <T> Matcher<Iterable<T>> hasOnlyItemsInOrder(Iterable<T> expectedItems) {
         return new HasOnlyItemsInOrderMatcher<T>(expectedItems);
     }
 
-    public static <T> Matcher<Iterable<T>> hasAllElementsSatisfying(final SelfDescribingPredicate<T> predicate) {
+    public static <T> Matcher<Iterable<T>> hasAllElementsSatisfying(SelfDescribingPredicate<T> predicate) {
         return new HasAllElementsSatisfyingMatcher<T>(predicate);
     }
 
-    public static <T> Matcher<Iterable<T>> hasSomeElementsSatisfying(final SelfDescribingPredicate<T> predicate) {
+    public static <T> Matcher<Iterable<T>> hasSomeElementsSatisfying(SelfDescribingPredicate<T> predicate) {
         return new HasSomeElementsSatisfyingMatcher<T>(predicate);
     }
 
