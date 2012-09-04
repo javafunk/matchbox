@@ -51,9 +51,4 @@ public class MatchesMatcher<T> extends TypeSafeDiagnosingMatcher<Matcher<? super
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, SHORT_PREFIX_STYLE);
-    }
 }

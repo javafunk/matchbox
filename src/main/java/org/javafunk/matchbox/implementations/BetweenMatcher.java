@@ -46,9 +46,4 @@ public class BetweenMatcher<T extends Comparable<T>> extends TypeSafeMatcher<T> 
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, SHORT_PREFIX_STYLE);
-    }
 }

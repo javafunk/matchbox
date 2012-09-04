@@ -77,9 +77,4 @@ public class IsBeanWithSameAttributesAsMatcher<T> extends TypeSafeDiagnosingMatc
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, SHORT_PREFIX_STYLE);
-    }
 }

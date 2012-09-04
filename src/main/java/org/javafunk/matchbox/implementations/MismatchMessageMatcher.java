@@ -56,9 +56,4 @@ public class MismatchMessageMatcher<T> extends TypeSafeDiagnosingMatcher<Matcher
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, SHORT_PREFIX_STYLE);
-    }
 }

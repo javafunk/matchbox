@@ -71,9 +71,4 @@ public class HasOnlyItemsInOrderMatcher<E> extends TypeSafeDiagnosingMatcher<Ite
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, SHORT_PREFIX_STYLE);
-    }
 }
