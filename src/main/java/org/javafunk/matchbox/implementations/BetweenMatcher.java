@@ -30,6 +30,6 @@ public class BetweenMatcher<T extends Comparable<T>> extends TypeSafeMatcher<T> 
 
     @Override
     public void describeTo(Description description) {
-        description.appendText("Value between ").appendValue(low).appendText(" and ").appendValue(high).appendText(" inclusive.");
+        description.appendText("value between ").appendValue(low).appendText(" and ").appendValue(high).appendText(" inclusive.");
     }
 }
