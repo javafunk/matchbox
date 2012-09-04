@@ -12,12 +12,13 @@ import org.hamcrest.Matcher;
 import org.javafunk.matchbox.implementations.*;
 
 import static java.util.Arrays.asList;
+import static org.javafunk.funk.Literals.listFrom;
 
 public class IterableMatchers {
     private IterableMatchers() {}
 
     public static <T> Matcher<Iterable<T>> hasOnlyItemsInAnyOrder(T... items) {
-        return hasOnlyItemsInAnyOrder(asList(items));
+        return hasOnlyItemsInAnyOrder(listFrom(items));
     }
 
     public static <T> Matcher<Iterable<T>> hasOnlyItemsInAnyOrder(Iterable<T> expectedItems) {
@@ -25,7 +26,7 @@ public class IterableMatchers {
     }
 
     public static <T> Matcher<Iterable<T>> hasOnlyItemsInOrder(T... items) {
-        return hasOnlyItemsInOrder(asList(items));
+        return hasOnlyItemsInOrder(listFrom(items));
     }
 
     public static <T> Matcher<Iterable<T>> hasOnlyItemsInOrder(Iterable<T> expectedItems) {
@@ -39,5 +40,4 @@ public class IterableMatchers {
     public static <T> Matcher<Iterable<T>> hasSomeElementsSatisfying(SelfDescribingPredicate<T> predicate) {
         return new HasSomeElementsSatisfyingMatcher<T>(predicate);
     }
-
 }

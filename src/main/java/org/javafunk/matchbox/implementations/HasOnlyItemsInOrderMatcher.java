@@ -8,6 +8,9 @@
  */
 package org.javafunk.matchbox.implementations;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
@@ -16,6 +19,7 @@ import org.javafunk.matchbox.IterableMatchers;
 
 import java.util.Iterator;
 
+import static org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE;
 import static org.javafunk.funk.Lazily.enumerate;
 
 public class HasOnlyItemsInOrderMatcher<E> extends TypeSafeDiagnosingMatcher<Iterable<E>> {
@@ -26,35 +30,50 @@ public class HasOnlyItemsInOrderMatcher<E> extends TypeSafeDiagnosingMatcher<Ite
     }
 
     @Override
-        protected boolean matchesSafely(Iterable<E> actualItems, Description description) {
-            Matcher<Iterable<E>> orderAgnosticMatcher = IterableMatchers.hasOnlyItemsInAnyOrder(expectedItems);
-            if (!orderAgnosticMatcher.matches(actualItems)) {
-                orderAgnosticMatcher.describeMismatch(actualItems, description);
+    protected boolean matchesSafely(Iterable<E> actualItems, Description description) {
+        Matcher<Iterable<E>> orderAgnosticMatcher = IterableMatchers.hasOnlyItemsInAnyOrder(expectedItems);
+        if (!orderAgnosticMatcher.matches(actualItems)) {
+            orderAgnosticMatcher.describeMismatch(actualItems, description);
+            return false;
+        }
+
+        Iterator<E> actualItemIterator = actualItems.iterator();
+        for (Pair<Integer, E> indexAndExpectedItem : enumerate(expectedItems)) {
+            E actualItem = actualItemIterator.next();
+            if (!indexAndExpectedItem.second().equals(actualItem)) {
+                description
+                        .appendText("got ")
+                        .appendValueList("", ", ", "", actualItems)
+                        .appendText("\n")
+                        .appendText("first item out of order ")
+                        .appendValue(actualItem)
+                        .appendText(" at index ")
+                        .appendText(String.valueOf(indexAndExpectedItem.first()));
                 return false;
             }
-
-            Iterator<E> actualItemIterator = actualItems.iterator();
-            for (Pair<Integer, E> indexAndExpectedItem : enumerate(expectedItems)) {
-                E actualItem = actualItemIterator.next();
-                if (!indexAndExpectedItem.second().equals(actualItem)) {
-                    description
-                            .appendText("got ")
-                            .appendValueList("", ", ", "", actualItems)
-                            .appendText("\n")
-                            .appendText("first item out of order ")
-                            .appendValue(actualItem)
-                            .appendText(" at index ")
-                            .appendText(String.valueOf(indexAndExpectedItem.first()));
-                    return false;
-                }
-            }
-            return true;
         }
-
-        @Override
-        public void describeTo(Description description) {
-            description.appendText("Collection containing exactly ")
-                    .appendValueList("", ", ", "", expectedItems)
-                    .appendText(" in order.");
-        }
+        return true;
     }
+
+    @Override
+    public void describeTo(Description description) {
+        description.appendText("Collection containing exactly ")
+                .appendValueList("", ", ", "", expectedItems)
+                .appendText(" in order.");
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return EqualsBuilder.reflectionEquals(this, object);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, SHORT_PREFIX_STYLE);
+    }
+}
