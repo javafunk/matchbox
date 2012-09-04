@@ -81,7 +81,7 @@ public class HasOnlyItemsInAnyOrderMatcher<E> extends TypeSafeDiagnosingMatcher<
                     .appendValueList("", ", ", "", expectedMultiset)
                     .appendText(" in any order.");
         } else {
-            description.appendText("Empty collection");
+            description.appendText("empty collection");
         }
     }
 
@@ -93,10 +93,5 @@ public class HasOnlyItemsInAnyOrderMatcher<E> extends TypeSafeDiagnosingMatcher<
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, SHORT_PREFIX_STYLE);
     }
 }

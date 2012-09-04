@@ -134,7 +134,7 @@ public class HasOnlyItemsInAnyOrderMatcherTest {
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
 
         // Then
-        assertThat(matcher.toString(), is("Empty collection"));
+        assertThat(matcher.toString(), is("empty collection"));
     }
 
     @Test
