@@ -20,5 +20,4 @@ public class MatcherMatchers {
     public static <T> Matcher<Matcher<? super T>> matches(final T sample) {
         return new MatchesMatcher<T>(sample);
     }
-
 }
