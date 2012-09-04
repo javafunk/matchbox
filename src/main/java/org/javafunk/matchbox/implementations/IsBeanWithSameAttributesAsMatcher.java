@@ -9,6 +9,9 @@
 package org.javafunk.matchbox.implementations;
 
 import org.apache.commons.beanutils.BeanMap;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
@@ -17,6 +20,7 @@ import java.util.Set;
 
 import static java.lang.String.format;
 import static org.apache.commons.lang.StringUtils.join;
+import static org.apache.commons.lang.builder.ToStringStyle.SHORT_PREFIX_STYLE;
 
 public class IsBeanWithSameAttributesAsMatcher<T> extends TypeSafeDiagnosingMatcher<T> {
     private final T expectedObject;
@@ -55,12 +59,27 @@ public class IsBeanWithSameAttributesAsMatcher<T> extends TypeSafeDiagnosingMatc
     @Override
     public void describeTo(Description description) {
         description
-                .appendText(format("%s matching ", expectedObject.getClass().getSimpleName()))
+                .appendText(format("a %s matching ", expectedObject.getClass().getSimpleName()))
                 .appendValue(expectedObject);
         if (ignoreProperties.size() > 0) {
             description
                     .appendText(" ignoring properties ")
                     .appendText(join(ignoreProperties, ", "));
         }
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return EqualsBuilder.reflectionEquals(this, object);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, SHORT_PREFIX_STYLE);
     }
 }
