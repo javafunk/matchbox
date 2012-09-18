@@ -13,8 +13,6 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.javafunk.matchbox.SelfDescribingPredicate;
 
-import static org.javafunk.funk.Eagerly.any;
-
 public class HasSomeElementsSatisfyingMatcher<T> extends TypeSafeMatcher<Iterable<T>> {
     private final SelfDescribingPredicate<T> predicate;
 
@@ -28,7 +26,12 @@ public class HasSomeElementsSatisfyingMatcher<T> extends TypeSafeMatcher<Iterabl
 
     @Override
     protected boolean matchesSafely(Iterable<T> items) {
-        return any(items, predicate);
+        for (T item : items) {
+            if (predicate.evaluate(item)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

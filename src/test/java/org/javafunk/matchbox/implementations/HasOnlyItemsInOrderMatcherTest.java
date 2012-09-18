@@ -3,8 +3,8 @@ package org.javafunk.matchbox.implementations;
 import org.hamcrest.Matcher;
 import org.junit.Test;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInOrder;
 import static org.javafunk.matchbox.Matchers.mismatchesSampleWithMessage;
 
@@ -12,8 +12,8 @@ public class HasOnlyItemsInOrderMatcherTest {
     @Test
     public void shouldReportOnMismatchedItemsInHasOnlyItemsInOrder() {
         // Given
-        Iterable<Integer> actual = iterableWith(1, 2, 5, 6);
-        Iterable<Integer> expected = iterableWith(1, 2, 3, 4);
+        Iterable<Integer> actual = asList(1, 2, 5, 6);
+        Iterable<Integer> expected = asList(1, 2, 3, 4);
 
         // When
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInOrder(expected);
@@ -27,8 +27,8 @@ public class HasOnlyItemsInOrderMatcherTest {
     @Test
     public void shouldReportOnTooManyItemsInHasOnlyItemsInOrder() {
         // Given
-        Iterable<Integer> actual = iterableWith(1, 2, 5, 6);
-        Iterable<Integer> expected = iterableWith(1, 2);
+        Iterable<Integer> actual = asList(1, 2, 5, 6);
+        Iterable<Integer> expected = asList(1, 2);
 
         // When
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInOrder(expected);
@@ -42,8 +42,8 @@ public class HasOnlyItemsInOrderMatcherTest {
     @Test
     public void shouldReportOnTooFewItemsInHasOnlyItemsInOrder() {
         // Given
-        Iterable<Integer> actual = iterableWith(1, 2);
-        Iterable<Integer> expected = iterableWith(1, 2, 4, 5);
+        Iterable<Integer> actual = asList(1, 2);
+        Iterable<Integer> expected = asList(1, 2, 4, 5);
 
         // When
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInOrder(expected);
@@ -57,8 +57,8 @@ public class HasOnlyItemsInOrderMatcherTest {
     @Test
     public void shouldReportOnIncorrectOrderInHasOnlyItemsInOrder() {
         // Given
-        Iterable<Integer> actual = iterableWith(1, 2, 4, 3);
-        Iterable<Integer> expected = iterableWith(1, 2, 3, 4);
+        Iterable<Integer> actual = asList(1, 2, 4, 3);
+        Iterable<Integer> expected = asList(1, 2, 3, 4);
 
         // When
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInOrder(expected);

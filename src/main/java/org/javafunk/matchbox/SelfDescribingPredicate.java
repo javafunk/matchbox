@@ -8,7 +8,7 @@
  */
 package org.javafunk.matchbox;
 
-import org.javafunk.funk.behaviours.Describable;
-import org.javafunk.funk.functors.Predicate;
-
-public interface SelfDescribingPredicate<T> extends Predicate<T>, Describable {}
+public interface SelfDescribingPredicate<T> {
+    boolean evaluate(T value);
+    String describe();
+}

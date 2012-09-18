@@ -5,12 +5,13 @@ import org.javafunk.matchbox.implementations.*;
 import org.javafunk.matchbox.testclasses.Bean;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.javafunk.funk.Literals.iterableWith;
 import static org.javafunk.matchbox.implementations.BetweenMatcher.between;
 import static org.javafunk.matchbox.implementations.HasOnlyItemsInAnyOrderMatcher.hasOnlyItemsInAnyOrder;
 import static org.javafunk.matchbox.implementations.HasOnlyItemsInOrderMatcher.hasOnlyItemsInOrder;
@@ -36,7 +37,7 @@ public class MatchersTest {
     @Test
     public void shouldReturnHasOnlyItemsInAnyOrderMatcherWithSuppliedElements() throws Exception {
         // Given
-        Matcher<Iterable<String>> expected = new HasOnlyItemsInAnyOrderMatcher<String>(iterableWith("a", "b", "c"));
+        Matcher<Iterable<String>> expected = new HasOnlyItemsInAnyOrderMatcher<String>(Arrays.asList("a", "b", "c"));
 
         // When
         Matcher<Iterable<String>> actual = hasOnlyItemsInAnyOrder("a", "b", "c");
@@ -48,10 +49,10 @@ public class MatchersTest {
     @Test
     public void shouldReturnHasOnlyItemsInAnyOrderMatcherWithAllElementsFromSuppliedIterable() throws Exception {
         // Given
-        Matcher<Iterable<String>> expected = new HasOnlyItemsInAnyOrderMatcher<String>(iterableWith("a", "e", "i", "o", "u"));
+        Matcher<Iterable<String>> expected = new HasOnlyItemsInAnyOrderMatcher<String>(asList("a", "e", "i", "o", "u"));
 
         // When
-        Matcher<Iterable<String>> actual = hasOnlyItemsInAnyOrder(iterableWith("a", "e", "i", "o", "u"));
+        Matcher<Iterable<String>> actual = hasOnlyItemsInAnyOrder(asList("a", "e", "i", "o", "u"));
 
         // Then
         assertThat(actual, equalTo(expected));
@@ -60,7 +61,7 @@ public class MatchersTest {
     @Test
     public void shouldReturnHasOnlyItemsInOrderMatcherWithSuppliedElements() throws Exception {
         // Given
-        Matcher<Iterable<Integer>> expected = new HasOnlyItemsInOrderMatcher<Integer>(iterableWith(1, 2, 3));
+        Matcher<Iterable<Integer>> expected = new HasOnlyItemsInOrderMatcher<Integer>(asList(1, 2, 3));
 
         // When
         Matcher<Iterable<Integer>> actual = hasOnlyItemsInOrder(1, 2, 3);
@@ -72,10 +73,10 @@ public class MatchersTest {
     @Test
     public void shouldReturnHasOnlyItemsInOrderMatcherWithAllElementsFromSuppliedIterable() throws Exception {
         // Given
-        Matcher<Iterable<Integer>> expected = new HasOnlyItemsInOrderMatcher<Integer>(iterableWith(1, 2, 3));
+        Matcher<Iterable<Integer>> expected = new HasOnlyItemsInOrderMatcher<Integer>(asList(1, 2, 3));
 
         // When
-        Matcher<Iterable<Integer>> actual = hasOnlyItemsInOrder(iterableWith(1, 2, 3));
+        Matcher<Iterable<Integer>> actual = hasOnlyItemsInOrder(asList(1, 2, 3));
 
         // Then
         assertThat(actual, equalTo(expected));

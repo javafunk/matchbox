@@ -3,20 +3,19 @@ package org.javafunk.matchbox.implementations;
 import org.hamcrest.Matcher;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
+import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.javafunk.funk.Literals.iterable;
-import static org.javafunk.funk.Literals.iterableWith;
-import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
-import static org.javafunk.matchbox.Matchers.successfullyMatches;
-import static org.javafunk.matchbox.Matchers.mismatchesSampleWithMessage;
+import static org.javafunk.matchbox.Matchers.*;
 
 public class HasOnlyItemsInAnyOrderMatcherTest {
     @Test
     public void shouldReportOnMismatchedItemsInHasOnlyItemsInAnyOrder() {
         // Given
-        Iterable<Integer> actual = iterableWith(1, 2, 5, 6);
-        Iterable<Integer> expected = iterableWith(1, 2, 3, 4);
+        Iterable<Integer> actual = asList(1, 2, 5, 6);
+        Iterable<Integer> expected = asList(1, 2, 3, 4);
 
         // When
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
@@ -30,8 +29,8 @@ public class HasOnlyItemsInAnyOrderMatcherTest {
     @Test
     public void shouldReportOnTooManyItemsInHasOnlyItemsInAnyOrder() {
         // Given
-        Iterable<Integer> actual = iterableWith(1, 2, 5, 6);
-        Iterable<Integer> expected = iterableWith(1, 2);
+        Iterable<Integer> actual = asList(1, 2, 5, 6);
+        Iterable<Integer> expected = asList(1, 2);
 
         // When
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
@@ -45,8 +44,8 @@ public class HasOnlyItemsInAnyOrderMatcherTest {
     @Test
     public void shouldReportOnTooFewItemsInHasOnlyItemsInAnyOrder() {
         // Given
-        Iterable<Integer> actual = iterableWith(1, 2);
-        Iterable<Integer> expected = iterableWith(1, 2, 4, 5);
+        Iterable<Integer> actual = asList(1, 2);
+        Iterable<Integer> expected = asList(1, 2, 4, 5);
 
         // When
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
@@ -60,8 +59,8 @@ public class HasOnlyItemsInAnyOrderMatcherTest {
     @Test
     public void shouldMatchIdenticalIterablesInHasOnlyItemsInAnyOrder() {
         // Given
-        Iterable<Integer> actual = iterableWith(1, 2, 3);
-        Iterable<Integer> expected = iterableWith(1, 2, 3);
+        Iterable<Integer> actual = asList(1, 2, 3);
+        Iterable<Integer> expected = asList(1, 2, 3);
 
         // When
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
@@ -73,8 +72,8 @@ public class HasOnlyItemsInAnyOrderMatcherTest {
     @Test
     public void shouldMatchIterablesDifferingOnlyInOrderInHasOnlyItemsInAnyOrder() {
         // Given
-        Iterable<Integer> actual = iterableWith(1, 2, 3);
-        Iterable<Integer> expected = iterableWith(1, 3, 2);
+        Iterable<Integer> actual = asList(1, 2, 3);
+        Iterable<Integer> expected = asList(1, 3, 2);
 
         // When
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
@@ -86,8 +85,8 @@ public class HasOnlyItemsInAnyOrderMatcherTest {
     @Test
     public void shouldMismatchIterablesDifferingOnlyInItemCountInHasOnlyItemsInAnyOrder() {
         // Given
-        Iterable<Integer> actual = iterableWith(1, 2, 2, 3);
-        Iterable<Integer> expected = iterableWith(1, 3, 3, 2);
+        Iterable<Integer> actual = asList(1, 2, 2, 3);
+        Iterable<Integer> expected = asList(1, 3, 3, 2);
 
         // When
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
@@ -102,8 +101,8 @@ public class HasOnlyItemsInAnyOrderMatcherTest {
     @Test
     public void shouldReportWhenActualItemsIsEmpty() {
         // Given
-        Iterable<Integer> actual = iterable();
-        Iterable<Integer> expected = iterableWith(1, 2, 3, 4);
+        Iterable<Integer> actual = new ArrayList<Integer>();
+        Iterable<Integer> expected = asList(1, 2, 3, 4);
 
         // When
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
@@ -116,7 +115,7 @@ public class HasOnlyItemsInAnyOrderMatcherTest {
     public void shouldReportWhenActualItemsIsNull() {
         // Given
         Iterable<Integer> actual = null;
-        Iterable<Integer> expected = iterableWith(1, 2, 3, 4);
+        Iterable<Integer> expected = asList(1, 2, 3, 4);
 
         // When
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
@@ -128,7 +127,7 @@ public class HasOnlyItemsInAnyOrderMatcherTest {
     @Test
     public void shouldReportWhenExpectedItemsIsEmpty() {
         // Given
-        Iterable<Integer> expected = iterable();
+        Iterable<Integer> expected = new ArrayList<Integer>();
 
         // When
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
@@ -140,8 +139,8 @@ public class HasOnlyItemsInAnyOrderMatcherTest {
     @Test
     public void shouldMatchWhenExpectedAndActualItemsAreEmpty() {
         // Given
-        Iterable<Integer> actual = iterable();
-        Iterable<Integer> expected = iterable();
+        Iterable<Integer> actual = new ArrayList<Integer>();
+        Iterable<Integer> expected = new ArrayList<Integer>();
 
         // When
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
@@ -153,7 +152,7 @@ public class HasOnlyItemsInAnyOrderMatcherTest {
     @Test
     public void shouldReportItemsFoundInExpectedIterable() {
         // Given
-        Iterable<Integer> expected = iterableWith(1, 2, 3, 4);
+        Iterable<Integer> expected = asList(1, 2, 3, 4);
 
         // When
         Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);

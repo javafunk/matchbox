@@ -13,12 +13,10 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
-import org.javafunk.funk.datastructures.tuples.Pair;
 
 import java.util.Iterator;
 
-import static org.javafunk.funk.Lazily.enumerate;
-import static org.javafunk.funk.Literals.listFrom;
+import static java.util.Arrays.asList;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
 
 public class HasOnlyItemsInOrderMatcher<E> extends TypeSafeDiagnosingMatcher<Iterable<E>> {
@@ -29,7 +27,7 @@ public class HasOnlyItemsInOrderMatcher<E> extends TypeSafeDiagnosingMatcher<Ite
     }
 
     public static <T> Matcher<Iterable<T>> hasOnlyItemsInOrder(T... items) {
-        return hasOnlyItemsInOrder(listFrom(items));
+        return hasOnlyItemsInOrder(asList(items));
     }
 
     public static <T> Matcher<Iterable<T>> hasOnlyItemsInOrder(Iterable<T> expectedItems) {
@@ -45,9 +43,12 @@ public class HasOnlyItemsInOrderMatcher<E> extends TypeSafeDiagnosingMatcher<Ite
         }
 
         Iterator<E> actualItemIterator = actualItems.iterator();
-        for (Pair<Integer, E> indexAndExpectedItem : enumerate(expectedItems)) {
+        int index = 0;
+        for (E expectedItem : expectedItems) {
+            Integer expectedItemIndex = index;
+            index += 1;
             E actualItem = actualItemIterator.next();
-            if (!indexAndExpectedItem.second().equals(actualItem)) {
+            if (!expectedItem.equals(actualItem)) {
                 description
                         .appendText("got ")
                         .appendValueList("", ", ", "", actualItems)
@@ -55,7 +56,7 @@ public class HasOnlyItemsInOrderMatcher<E> extends TypeSafeDiagnosingMatcher<Ite
                         .appendText("first item out of order ")
                         .appendValue(actualItem)
                         .appendText(" at index ")
-                        .appendText(String.valueOf(indexAndExpectedItem.first()));
+                        .appendText(String.valueOf(expectedItemIndex));
                 return false;
             }
         }

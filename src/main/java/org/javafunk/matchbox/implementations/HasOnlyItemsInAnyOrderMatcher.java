@@ -8,26 +8,25 @@
  */
 package org.javafunk.matchbox.implementations;
 
+import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
-import org.javafunk.funk.Multisets;
 
-import static org.javafunk.funk.Literals.listFrom;
-import static org.javafunk.funk.Literals.multisetFrom;
+import static java.util.Arrays.asList;
 
 public class HasOnlyItemsInAnyOrderMatcher<E> extends TypeSafeDiagnosingMatcher<Iterable<E>> {
     private final Multiset<E> expectedMultiset;
 
     public HasOnlyItemsInAnyOrderMatcher(Iterable<E> expectedMultiset) {
-        this.expectedMultiset = multisetFrom(expectedMultiset);
+        this.expectedMultiset = HashMultiset.create(expectedMultiset);
     }
 
     public static <T> Matcher<Iterable<T>> hasOnlyItemsInAnyOrder(T... items) {
-        return hasOnlyItemsInAnyOrder(listFrom(items));
+        return hasOnlyItemsInAnyOrder(asList(items));
     }
 
     public static <T> Matcher<Iterable<T>> hasOnlyItemsInAnyOrder(Iterable<T> expectedItems) {
@@ -37,7 +36,7 @@ public class HasOnlyItemsInAnyOrderMatcher<E> extends TypeSafeDiagnosingMatcher<
     @Override
     protected boolean matchesSafely(final Iterable<E> actualItems, Description description) {
         boolean matches = true;
-        final Multiset<E> actualMultiset = multisetFrom(actualItems);
+        final Multiset<E> actualMultiset = HashMultiset.create(actualItems);
 
         description.appendText("got ");
 
@@ -69,8 +68,15 @@ public class HasOnlyItemsInAnyOrderMatcher<E> extends TypeSafeDiagnosingMatcher<
         return matches;
     }
 
-    private boolean checkForDifferences(Multiset<E> expectedSet, Multiset<E> actualSet, Description description, String message) {
-        Multiset<E> differences = Multisets.difference(expectedSet, actualSet);
+    private boolean checkForDifferences(
+            Multiset<E> expectedSet,
+            Multiset<E> actualSet,
+            Description description,
+            String message) {
+        Multiset<E> differences = HashMultiset.create(expectedSet);
+        for (E item : actualSet) {
+            differences.remove(item);
+        }
         if (differences.size() > 0) {
             description.appendText("\n")
                     .appendText(message)

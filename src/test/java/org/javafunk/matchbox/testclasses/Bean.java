@@ -1,7 +1,5 @@
 package org.javafunk.matchbox.testclasses;
 
-import org.javafunk.matchbox.implementations.IsBeanWithSameAttributesAsMatcherTest;
-
 import static java.lang.String.format;
 
 public class Bean {
