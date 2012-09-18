@@ -3,7 +3,7 @@
     <groupId>org.javafunk.matchbox</groupId>
     <artifactId>matchbox</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.2</version>
+    <version>0.1.3-SNAPSHOT</version>
 
     <name>Matchbox</name>
     <description>Hopefully useful Hamcrest matchers</description>
