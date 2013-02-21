@@ -160,4 +160,33 @@ public class HasOnlyItemsInAnyOrderMatcherTest {
         // Then
         assertThat(matcher.toString(), is("Collection with size <4> containing exactly items <1>, <2>, <3>, <4> in any order."));
     }
+
+
+    @Test
+    public void shouldMatchIterablesContainingNullsDifferingOnlyInOrderInHasOnlyItemsInAnyOrder() {
+        // Given
+        Iterable<Integer> actual = asList(1, 2, null);
+        Iterable<Integer> expected = asList(1, null, 2);
+
+        // When
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
+
+        // Then
+        assertThat(matcher, successfullyMatches(actual));
+    }
+
+    @Test
+    public void shouldMismatchIterablesDifferingOnlyInNullItemCountInHasOnlyItemsInAnyOrder() {
+        // Given
+        Iterable<Integer> actual = asList(1, 2, 2, null);
+        Iterable<Integer> expected = asList(1, null, null, 2);
+
+        // When
+        Matcher<Iterable<Integer>> matcher = hasOnlyItemsInAnyOrder(expected);
+
+        // Then
+        assertThat(matcher, mismatchesSampleWithMessage(actual, "got <1>, <2>, <2>, null\n" +
+                "expected but didn't get null\n" +
+                "got but didn't expect <2>"));
+    }
 }

@@ -16,6 +16,7 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import java.util.Iterator;
 
+import static com.google.common.base.Objects.equal;
 import static java.util.Arrays.asList;
 import static org.javafunk.matchbox.Matchers.hasOnlyItemsInAnyOrder;
 
@@ -48,7 +49,7 @@ public class HasOnlyItemsInOrderMatcher<E> extends TypeSafeDiagnosingMatcher<Ite
             Integer expectedItemIndex = index;
             index += 1;
             E actualItem = actualItemIterator.next();
-            if (!expectedItem.equals(actualItem)) {
+            if (!equal(expectedItem, actualItem)){
                 description
                         .appendText("got ")
                         .appendValueList("", ", ", "", actualItems)
