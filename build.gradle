@@ -1,1 +1,180 @@
 apply plugin: "idea"
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'maven'
+apply plugin: 'signing'
+apply plugin: 'nexus-workflow'
+
+ext.sha = 'git rev-parse --short HEAD'.execute().in.text.trim()
+
+version = '0.1.5.' + (System.getenv("SNAP_PIPELINE_COUNTER") ?: sha)
+project.group = 'org.javafunk.matchbox'
+archivesBaseName = "matchbox"
+
+sourceCompatibility = '1.7'
+
+defaultTasks('clean', 'test')
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.adaptc.gradle:nexus-workflow:0.6'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'commons-beanutils:commons-beanutils:1.8.3'
+    compile 'commons-lang:commons-lang:2.6'
+    compile 'commons-collections:commons-collections:3.2.1'
+    compile 'org.hamcrest:hamcrest-core:1.2.1'
+    compile 'org.hamcrest:hamcrest-library:1.2.1'
+    compile 'com.google.guava:guava:11.0.2'
+
+    testCompile 'junit:junit-dep:4.11'
+    testCompile 'org.mockito:mockito-core:1.9.5'
+}
+
+project.tasks.withType(JavaCompile) {
+    options.deprecation = true
+    options.compilerArgs = ['-Xlint:none', '-Xlint:unchecked']
+    options.fork(memoryMaximumSize: '1024m')
+}
+
+project.tasks.withType(Test) {
+    minHeapSize = "2G"
+    maxHeapSize = "2G"
+
+    useTestNG {
+        useDefaultListeners = true
+    }
+
+    testLogging {
+        events 'failed', 'skipped'
+    }
+}
+
+signing {
+    sign configurations.archives
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Matchbox', 'Implementation-Version': version
+    }
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+    manifest {
+        attributes 'Implementation-Title': 'Matchbox', 'Implementation-Version': version
+    }
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+    manifest {
+        attributes 'Implementation-Title': 'Matchbox', 'Implementation-Version': version
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+uploadArchives {
+    repositories {
+        flatDir {
+            dirs 'repos'
+        }
+
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(
+                        userName: project.property("oss-releases.username"),
+                        password: project.property("oss-releases.password"))
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(
+                        userName: project.property("oss-releases.username"),
+                        password: project.property("oss-releases.password"))
+            }
+
+            pom.project {
+                name 'Matchbox'
+                packaging 'jar'
+                description 'Hopefully useful Hamcrest matchers.'
+                url 'https://github.com/javafunk/matchbox'
+
+                scm {
+                    connection 'scm:git:git://github.com/javafunk/matchbox'
+                    developerConnection 'scm:git:git://github.com/javafunk/matchbox/'
+                    url 'https://github.com/javafunk/matchbox'
+                }
+
+                licenses {
+                    license {
+                        name 'BSD License'
+                        url 'http://www.opensource.org/licenses/bsd-license.php'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'tobyclemson'
+                        name 'Toby Clemson'
+                        email 'tobyclemson@gmail.com'
+                    }
+
+                    developer {
+                        id 'simon'
+                        name 'Simon Brunning'
+                        email 'simon@brunningonline.net'
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+idea {
+    project {
+        ipr {
+            withXml {
+                def ideaProject = it.asNode()
+
+                // Automatically set up Git support
+                ideaProject.append(node().component(name: 'VcsDirectoryMappings') {
+                    mapping(directory: '$PROJECT_DIR$', vcs: 'Git')
+                })
+
+                // Turn on annotation processing
+                ideaProject.component.find { it.@name == 'CompilerConfiguration' }['annotationProcessing'][0].replaceNode {
+                    annotationProcessing {
+                        profile(default: true, name: 'Default', useClasspath: 'true', enabled: true)
+                    }
+                }
+            }
+        }
+    }
+}
+
+def node() {
+    new NodeBuilder()
+}
